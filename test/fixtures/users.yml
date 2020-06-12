@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  event_id: MyString
+  sub_id: MyString
+  serial_num: MyString
+  twitter_screenname: MyString
+
+two:
+  event_id: MyString
+  sub_id: MyString
+  serial_num: MyString
+  twitter_screenname: MyString

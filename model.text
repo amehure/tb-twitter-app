@@ -1,0 +1,39 @@
+モデル名：　|　イベント　|　Event
+
+イベントID　|　 “event_id”　|　string
+タイトル　|　 “event_name”　|　string
+内容　|　 “contents”　|　text
+開催回数　|　 “days_held”　|　integer
+主催者Twitterアカウント　|　 “organizar”　|　string
+回答期限　|　 “deadline”　|　datetime
+複数参加費区分　|　 “multiple_entries”　|　boolean
+登録日時　|　 “created_at”　|　datetime
+更新日時　|　 “updated_at”　|　datetime
+
+モデル名：　|　開催日時　|　Dday
+
+イベントID　|　“event_id”　|　string
+枝番　|　“event_sub_no”　|　string
+開催日時　|　“event_date”　|　datetime
+開催決定区分　|　“decision”　|　string
+最大開催人数　|　“max_num”　|　integer
+ZoomURL　|　“zoom_url”　|　string
+ZoomID　|　“zoom_id”　|　string
+ZoomPass　|　“zoom_pass”　|　string
+登録日時　|　“created_at”　|　datetime
+更新日時　|　“updated_at”　|　datetime
+
+モデル名：　|　参加者　|　User
+
+イベントID　|　“event_id”　|　string
+枝番　|　“event_sub_no”　|　string
+追い番　|　“serial_no”　|　string
+参加者Twitterアカウント　|　“twitter_screenname”　|　string
+登録日時　|　“created_at”　|　datetime
+更新日時　|　“updated_at”　|　datetime
+
+string: 文字列型
+integer: 整数型
+text: 長い文字列型
+datetime: 日時両方を扱う型
+boolean: 真偽型

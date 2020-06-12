@@ -1,0 +1,2 @@
+class Dday < ApplicationRecord
+end

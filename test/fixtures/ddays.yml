@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  event_id: MyString
+  sub_id: MyString
+  date_event: 2020-06-11 22:11:41
+  decision: MyString
+  max_num: 1
+  zoom_url: MyString
+  zoom_id: MyString
+  zoom_pass: MyString
+
+two:
+  event_id: MyString
+  sub_id: MyString
+  date_event: 2020-06-11 22:11:41
+  decision: MyString
+  max_num: 1
+  zoom_url: MyString
+  zoom_id: MyString
+  zoom_pass: MyString

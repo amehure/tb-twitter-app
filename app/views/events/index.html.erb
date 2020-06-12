@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<h1>イベント一覧</h1>
+
+    <% @events.each do |event| %>
+  <div class="table-responsivle">
+    <table class="table border">
+      <thead>
+        <tr>
+          <th class="text-nowrap"><strong>イベントID</strong></th>
+          <th class="text-nowrap"><strong>イベント名</strong></th>
+          <th class="text-nowrap"><strong>内容</strong></th>
+          <th class="text-nowrap"><strong>開催回数</strong></th>
+          <th class="text-nowrap"><strong>主催者Twiiterアカウント</strong></th>
+          <th class="text-nowrap"><strong>回答期限</strong></th>
+          <th class="text-nowrap"><strong>複数参加可否区分</strong></th>
+          <th class="text-nowrap"><strong>登録日時</strong></th>
+          <th class="text-nowrap"><strong>更新日時</strong></th>
+          <th class="text-nowrap"><strong></strong></th>
+          <th class="text-nowrap"><strong></strong></th>
+          <th class="text-nowrap"><strong></strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="m-5 text-nowrap"><%= event.event_id %></span></th>
+          <td><span class="m-5 text-nowrap"><%= event.event_name %></span></th>
+          <td><span class="m-5 text-nowrap"><%= event.contents %></span></th>
+          <td><span class="m-5 text-nowrap"><%= event.days_held %></span></th>
+          <td><span class="m-5 text-nowrap"><%= event.organizar%></span></th>
+          <td><span class="m-5 text-nowrap"><%= event.try(:deadline).strftime("%Y年 %m月 %d日")+" ("+week(event.try(:deadline))+")" %></span></th>
+          <td><span class="m-5 text-nowrap"><%= event.multiple_entries %></span></th>
+          <td><span class="m-5 text-nowrap"><%= event.try(:created_at).strftime("%Y年 %m月 %d日")+" ("+week(event.try(:created_at))+")" %></span></th>
+          <td><span class="m-5 text-nowrap"><%= event.try(:updated_at).strftime("%Y年 %m月 %d日")+" ("+week(event.try(:updated_at))+")" %></span></th>
+          <td><%= link_to 'Show', event %></td>
+          <td><%= link_to 'Edit', edit_event_path(event) %></td>
+          <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      </tbody>
+    </table>
+    <% end %>
+  </div>
+
+
+<br>
+
+<%= link_to 'New Event', new_event_path %>

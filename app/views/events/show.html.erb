@@ -1,0 +1,88 @@
+
+<div class="container-fluid">
+  <div class="container">
+    <p id="notice"><%= notice %></tr>
+    <table class="table border">
+      <tbody>
+        <tr>
+          <th><strong>イベントID</strong></th>
+          <td><span class="m-5 text-nowrap"><%= @event.event_id %></span></th>
+        </tr>
+        <tr>
+          <th><strong>イベント名</strong></th>
+          <td><span class="m-5 text-nowrap"><%= @event.event_name %></span></th>
+        </tr>
+        <tr>
+          <th><strong>内容</strong></th>
+          <td><span class="m-5 text-nowrap"><%= @event.contents %></span></th>
+        </tr>
+        <tr>
+          <th><strong>開催回数</strong></th>
+          <td><span class="m-5 text-nowrap"><%= @event.days_held %></span></th>
+        </tr>
+        <tr>
+          <th><strong>主催者Twiiterアカウント</strong></th>
+          <td><span class="m-5 text-nowrap"><%= @event.organizar%></span></th>
+        </tr>
+        <tr>
+          <th><strong>回答期限</strong></th>
+          <td><span class="m-5 text-nowrap"><%= @event.try(:deadline).strftime("%Y年 %m月 %d日")+" ("+week(@event.try(:deadline))+")" %></span></th>
+        </tr>
+        <tr>
+          <th><strong>複数参加可否区分</strong></th>
+          <td><span class="m-5 text-nowrap"><%= @event.multiple_entries %></span></th>
+        </tr>
+        <tr>
+          <th><strong>登録日時</strong></th>
+          <td><span class="m-5 text-nowrap"><%= @event.try(:created_at).strftime("%Y年 %m月 %d日")+" ("+week(@event.try(:created_at))+")" %></span></th>
+        </tr>
+        <tr>
+          <th><strong>更新日時</strong></th>
+          <td><span class="m-5 text-nowrap"><%= @event.try(:updated_at).strftime("%Y年 %m月 %d日")+" ("+week(@event.try(:updated_at))+")" %></span></th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<div class="table-responsive">
+  <table class="table border">
+    <thead>
+      <tr class="">
+        <th class="text-nowrap "><strong>開催決定区分</strong></th>
+        <th class="text-nowrap "><strong>ZoomID/url</strong></th>
+        <th class="text-nowrap "><strong>開催日時</strong></th>
+        <th class="text-nowrap "><strong>内容</strong></th>
+        <% max_col = @dday.pluck(:max_num).max >= 5 ? @dday.pluck(:max_num).max : 5 %>
+        <% [*(1..@dday.pluck(:max_num).max)].in_groups_of(max_col) do |group|%>
+          <% group.each do |n| %>
+            <th class="text-nowrap "><strong><%= n %></strong></th>
+          <% end %>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @dday.each do |dday| %>
+      <tr class="">
+        <td class="text-nowrap ">
+          <div class="form-check"><input type="checkbox" class="form-check-input" value=""><label for="" class="form-check-label">決定</label></div>
+          <div class="form-check"><input type="checkbox" class="form-check-input" value=""><label for="" class="form-check-label">キャンセル</label></div>
+          <div class="form-check"><input type="checkbox" class="form-check-input" value=""><label for="" class="form-check-label">延期</label></div>
+          <button class="btn btn-sm btn-secondary">DM送信</button>
+        </td>
+        <td class="text-nowrap "><%= dday.try(:zoom_url) %>/<br><%= dday.try(:zoom_id) %></td>
+        <td class="text-nowrap "><%= dday.try(:event_date).strftime("%Y年 %m月 %d日")+" ("+week(dday.try(:event_date))+")" %></td>
+        <td class="text-nowrap ">DB正規化</td>
+        <% [*(1..dday.max_num )].in_groups_of(max_col) do |group|%>
+          <% group.each do |num| %>
+          <td id="<%= dday.event_id %>_<%= dday.event_sub_no %>_entry_<%= num %>" class="text-nowrap "></td>
+          <% end %>
+        <% end %>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+</div>
+
+<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to 'Back', events_path %>
