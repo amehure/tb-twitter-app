@@ -1,5 +1,11 @@
 <div class="container">
-  <%= form_with(model: @dday, url: event_ddays_path, local: true) do |form| %>
+  <%
+=begin%>
+ <%= form_with(model: @dday, url: event_ddays_path, local: true) do |form| %>  
+
+<%
+=end%>
+  <%= form_with(model: dday, url: dday_path, local: true) do |form| %>  
     <% if dday.errors.any? %>
       <div id="error_explanation">
         <h2><%= pluralize(dday.errors.count, "error") %> prohibited this dday from being saved:</h2>
@@ -16,7 +22,7 @@
       <tbody>
         <tr class="field form-group">
           <th class=""><%= form.label :event_no %></th>
-          <td><%= form.text_field :event_no, value:@event_no,class:"form-control" %></td>
+          <td><%= form.text_field :event_no, value:@dday.event_no,class:"form-control" %></td>
         </tr>
         <tr class="field form-group">
           <th class=""><%= form.label :event_sub_no %></th>
@@ -55,7 +61,7 @@
 
         <tr class="field form-group">
           <th class=""><%= form.label :event_id %></th>
-          <td><%= form.number_field :event_id, value:@event_id,class:"form-control" %></td>
+          <td><%= form.number_field :event_id, value:@dday.event_id,class:"form-control" %></td>
         </tr>
       </tbody>
     </table>

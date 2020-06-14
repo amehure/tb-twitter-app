@@ -11,9 +11,7 @@ class EventsController < ApplicationController
   # GET /events/1.json
   def show
     event_id = Event.find(params[:id]).event_no
-    p event_id
     @dday = Dday.where(event_no: event_id) || []
-    p @dday
     if @dday.present?
       if @dday.count == 1
         @col_range = [*(1..@dday[0].max_num)]
@@ -34,6 +32,8 @@ class EventsController < ApplicationController
 
   # GET /events/1/edit
   def edit
+    @event = Event.find_by(params[:event_id])
+    @dday = Dday.find(params[:id])
   end
 
   # POST /events
@@ -55,9 +55,12 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1
   # PATCH/PUT /events/1.json
   def update
+    # @event_no = params[:event_id]
+    # @event_id = Event.where(event_no: @event_no ).first.id
     respond_to do |format|
       if @event.update(event_params)
         format.html { redirect_to @event, notice: 'Event was successfully updated.' }
+        # format.html { redirect_to event_path(id: @event_id), notice: 'Event was successfully updated.' }
         format.json { render :show, status: :ok, location: @event }
       else
         format.html { render :edit }

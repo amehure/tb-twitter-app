@@ -56,6 +56,7 @@
             <th class="text-nowrap "><strong><%= n %></strong></th>
           <% end %>
         <% end %>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -69,12 +70,16 @@
         </td>
         <td class="text-nowrap "><%= dday.try(:zoom_url) %>/<br><%= dday.try(:zoom_id) %></td>
         <td class="text-nowrap "><%= dday.try(:event_date).strftime("%Y年 %m月 %d日")+" ("+week(dday.try(:event_date))+")" %></td>
-        <td class="text-nowrap ">DB正規化</td>
+        <td class="text-nowrap "><%= dday.try(:decision) %></td>
         <% [*(1..dday.max_num )].in_groups_of(@max_col) do |group|%>
           <% group.each do |num| %>
           <td id="<%= dday.event_id %>_<%= dday.event_sub_no %>_entry_<%= num %>" class="text-nowrap "></td>
           <% end %>
         <% end %>
+        
+        <td>
+          <%= link_to '編集', edit_dday_path(@event.event_no,dday.id),class:"btn btn-secondary btn-sm text-nowrap" %>
+        </td>
       </tr>
       <% end %>
     </tbody>
@@ -82,6 +87,6 @@
 </div>
 
 </div>
-<%= link_to 'New Dday', new_event_dday_path(@event.event_no) %>
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
+<%= link_to '開催日時作成', new_event_dday_path(@event.event_no),class:"btn btn-secondary btn-block" %>
+<%= link_to 'イベント内容変更', edit_event_path(@event),class:"btn btn-secondary btn-block" %> |
+<%= link_to '一覧へ戻る', events_path,class:"btn btn-secondary btn-block" %>

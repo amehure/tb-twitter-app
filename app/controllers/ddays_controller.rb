@@ -22,6 +22,8 @@ class DdaysController < ApplicationController
 
   # GET /ddays/1/edit
   def edit
+    @event_no = params[:id]
+    @event_id = Event.where(event_no: @event_no ).first.id
   end
 
   # POST /ddays
@@ -44,9 +46,12 @@ class DdaysController < ApplicationController
   # PATCH/PUT /ddays/1
   # PATCH/PUT /ddays/1.json
   def update
+    @dday = Dday.new(dday_params)
+    @event_no = params[:event_id]
+    @event_id = Event.where(event_no: @event_no ).first.id
     respond_to do |format|
       if @dday.update(dday_params)
-        format.html { redirect_to @dday, notice: 'Dday was successfully updated.' }
+        format.html { redirect_to event_path(id: @event_id), notice: 'Dday was successfully updated.' }
         format.json { render :show, status: :ok, location: @dday }
       else
         format.html { render :edit }
@@ -57,10 +62,13 @@ class DdaysController < ApplicationController
 
   # DELETE /ddays/1
   # DELETE /ddays/1.json
-  def destroy
+  def destroy 
+    @dday = Dday.new(dday_params)
+    @event_no = params[:event_id]
+    @event_id = Event.where(event_no: @event_no ).first.id
     @dday.destroy
     respond_to do |format|
-      format.html { redirect_to ddays_url, notice: 'Dday was successfully destroyed.' }
+      format.html { redirect_to event_path(id: @event_id), notice: 'Dday was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -68,7 +76,7 @@ class DdaysController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_dday
-      @dday = Dday.find(params[:id])
+      @dday = Dday.find(params[:format]) || Dday.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

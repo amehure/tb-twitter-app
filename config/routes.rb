@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :events do
+  resources :events, shallow: true do
     resources :ddays do
       resources :users
     end
