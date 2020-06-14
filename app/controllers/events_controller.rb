@@ -10,10 +10,21 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-    event_id = Event.find(params[:id]).event_id
+    event_id = Event.find(params[:id]).event_no
     p event_id
-    @dday = Dday.where(event_id: event_id)
+    @dday = Dday.where(event_no: event_id) || []
     p @dday
+    if @dday.present?
+      if @dday.count == 1
+        @col_range = [*(1..@dday[0].max_num)]
+      else
+        @col_range = [*(1..@dday.pluck(:max_num).max)]
+      end
+      @max_col = @dday.pluck(:max_num).max >= 5 ? @dday.pluck(:max_num).max : 5
+    else
+      @col_range = []
+      @max_col = 5
+    end
   end
 
   # GET /events/new

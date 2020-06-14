@@ -1,0 +1,68 @@
+<div class="container">
+  <%= form_with(model: @dday, url: event_ddays_path, local: true) do |form| %>
+    <% if dday.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(dday.errors.count, "error") %> prohibited this dday from being saved:</h2>
+
+        <ul>
+          <% dday.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  <div class="table-responsive border">
+    <table class="table">
+      <tbody>
+        <tr class="field form-group">
+          <th class=""><%= form.label :event_no %></th>
+          <td><%= form.text_field :event_no, value:@event_no,class:"form-control" %></td>
+        </tr>
+        <tr class="field form-group">
+          <th class=""><%= form.label :event_sub_no %></th>
+          <td><%= form.text_field :event_sub_no,class:"form-control" %></td>
+        </tr>
+
+        <tr class="field form-group">
+          <th class=""><%= form.label :event_date %></th>
+          <td><%= form.datetime_field :event_date,class:"form-control" %></td>
+        </tr>
+
+        <tr class="field form-group">
+          <th class=""><%= form.label :decision %></th>
+          <td><%= form.text_field :decision,class:"form-control" %></td>
+        </tr>
+
+        <tr class="field form-group">
+          <th class=""><%= form.label :max_num %></th>
+          <td><%= form.number_field :max_num,class:"form-control" %></td>
+        </tr>
+
+        <tr class="field form-group">
+          <th class=""><%= form.label :zoom_url %></th>
+          <td><%= form.text_field :zoom_url,class:"form-control" %></td>
+        </tr>
+
+        <tr class="field form-group">
+          <th class=""><%= form.label :zoom_id %></th>
+          <td><%= form.text_field :zoom_id,class:"form-control" %></td>
+        </tr>
+
+        <tr class="field form-group">
+          <th class=""><%= form.label :zoom_pass %></th>
+          <td><%= form.text_field :zoom_pass,class:"form-control" %></td>
+        </tr>
+
+        <tr class="field form-group">
+          <th class=""><%= form.label :event_id %></th>
+          <td><%= form.number_field :event_id, value:@event_id,class:"form-control" %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <div class="actions">
+    <%= form.submit class:"btn btn-secondary btn-block" %>
+  </div>
+</div>
+<% end %>

@@ -1,3 +1,4 @@
+<div class="container">
 <%= form_with(model: event, local: true) do |form| %>
   <% if event.errors.any? %>
     <div id="error_explanation">
@@ -10,38 +11,47 @@
       </ul>
     </div>
   <% end %>
+  <div class="table-responsive border">
+    <table class="table">
+      <tbody>
+        <tr class="field form-group">
+          <th class=""><%= form.label :event_no %></th>
+          <td><%= form.text_field :event_no, value:"",class:"form-control" %></td>
+        </tr>
+        <tr class="field form-group">
+          <th class=""><%= form.label :event_name %></th>
+          <td><%= form.text_field :event_name,class:"form-control" %></td>
+        </tr>
+        <tr class="field form-group">
+          <th class=""><%= form.label :contents %></th>
+          <td><%= form.text_field :contents,class:"form-control" %></td>
+        </tr>
 
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
+        <tr class="field form-group">
+          <th class=""><%= form.label :days_held %></th>
+          <td><%= form.number_field :days_held,class:"form-control" %></td>
+        </tr>
+
+        <tr class="field form-group">
+          <th class=""><%= form.label :organizar %></th>
+          <td><%= form.text_field :organizar,class:"form-control" %></td>
+        </tr>
+
+        <tr class="field form-group">
+          <th class=""><%= form.label :deadline %></th>
+          <td><%= form.datetime_field :deadline,class:"form-control" %></td>
+        </tr>
+
+        <tr class="field form-group">
+          <th class=""><%= form.label :multipl_entries %></th>
+          <td><%= form.check_box :multipl_entries,class:"form-control" %></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-
-  <div class="field">
-    <%= form.label :contents %>
-    <%= form.text_area :contents %>
-  </div>
-
-  <div class="field">
-    <%= form.label :days_held %>
-    <%= form.number_field :days_held %>
-  </div>
-
-  <div class="field">
-    <%= form.label :organizar %>
-    <%= form.text_field :organizar %>
-  </div>
-
-  <div class="field">
-    <%= form.label :deadline %>
-    <%= form.time_select :deadline %>
-  </div>
-
-  <div class="field">
-    <%= form.label :multipl_entries %>
-    <%= form.check_box :multipl_entries %>
-  </div>
-
+  <br>
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class:"btn btn-secondary btn-block" %>
   </div>
+</div>
 <% end %>

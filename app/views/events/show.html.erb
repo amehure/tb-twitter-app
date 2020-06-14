@@ -6,7 +6,7 @@
       <tbody>
         <tr>
           <th><strong>イベントID</strong></th>
-          <td><span class="m-5 text-nowrap"><%= @event.event_id %></span></th>
+          <td><span class="m-5 text-nowrap"><%= @event.event_no %></span></th>
         </tr>
         <tr>
           <th><strong>イベント名</strong></th>
@@ -51,8 +51,7 @@
         <th class="text-nowrap "><strong>ZoomID/url</strong></th>
         <th class="text-nowrap "><strong>開催日時</strong></th>
         <th class="text-nowrap "><strong>内容</strong></th>
-        <% max_col = @dday.pluck(:max_num).max >= 5 ? @dday.pluck(:max_num).max : 5 %>
-        <% [*(1..@dday.pluck(:max_num).max)].in_groups_of(max_col) do |group|%>
+        <% @col_range.in_groups_of(@max_col) do |group|%>
           <% group.each do |n| %>
             <th class="text-nowrap "><strong><%= n %></strong></th>
           <% end %>
@@ -71,7 +70,7 @@
         <td class="text-nowrap "><%= dday.try(:zoom_url) %>/<br><%= dday.try(:zoom_id) %></td>
         <td class="text-nowrap "><%= dday.try(:event_date).strftime("%Y年 %m月 %d日")+" ("+week(dday.try(:event_date))+")" %></td>
         <td class="text-nowrap ">DB正規化</td>
-        <% [*(1..dday.max_num )].in_groups_of(max_col) do |group|%>
+        <% [*(1..dday.max_num )].in_groups_of(@max_col) do |group|%>
           <% group.each do |num| %>
           <td id="<%= dday.event_id %>_<%= dday.event_sub_no %>_entry_<%= num %>" class="text-nowrap "></td>
           <% end %>
@@ -83,6 +82,6 @@
 </div>
 
 </div>
-
+<%= link_to 'New Dday', new_event_dday_path(@event.event_no) %>
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>

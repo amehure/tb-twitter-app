@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_12_003820) do
+ActiveRecord::Schema.define(version: 2020_06_13_070740) do
 
   create_table "ddays", force: :cascade do |t|
-    t.string "event_id"
+    t.string "event_no"
     t.string "event_sub_no"
     t.datetime "event_date"
     t.string "decision"
@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(version: 2020_06_12_003820) do
     t.string "zoom_pass"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "event_id"
+    t.index ["event_id"], name: "index_ddays_on_event_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -34,16 +36,20 @@ ActiveRecord::Schema.define(version: 2020_06_12_003820) do
     t.boolean "multiple_entries"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "event_id"
+    t.string "event_no"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "event_id"
+    t.string "event_no"
     t.string "event_sub_no"
     t.string "serial_no"
     t.string "twitter_screenname"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "dday_id"
+    t.index ["dday_id"], name: "index_users_on_dday_id"
   end
 
+  add_foreign_key "ddays", "events"
+  add_foreign_key "users", "ddays"
 end
