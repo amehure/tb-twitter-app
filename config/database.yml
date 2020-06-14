@@ -25,4 +25,4 @@ production:
   adapter: postgresql
   encording: unicode
   pool: 5
-  database: db/production.sqlite3
+  database: production_tb-twitter-app_pg
