@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root 'event#index'
   resources :events, shallow: true do
     resources :ddays do
       resources :users
