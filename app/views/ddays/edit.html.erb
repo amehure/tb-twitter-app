@@ -1,10 +1,9 @@
 <h1>Editing Dday</h1>
 
-<%= render 'form', dday: @dday, url: edit_dday_path(@dday.id)  %>
-
+<%= render 'form', dday: @dday %>
 <%
 =begin%>
- <%= render 'form', model: [@event, @dday] %> 
+ <%= render 'form', dday: @dday, url: edit_dday_path(@dday.id)  %> 
 <%
 =end%>
 

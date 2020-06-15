@@ -78,7 +78,8 @@
         <% end %>
         
         <td>
-          <%= link_to '編集', edit_dday_path(@event.event_no,dday.id),class:"btn btn-secondary btn-sm text-nowrap" %>
+          <%= link_to '編集', edit_dday_path(@event.id,dday.id),class:"btn btn-secondary btn-sm text-nowrap" %>
+          <%= link_to '削除', dday_path(dday), method: :delete, class:"btn btn-secondary btn-sm text-nowrap", data: { confirm: '予定を削除されます。よろしいですか？' } %>
         </td>
       </tr>
       <% end %>
@@ -87,6 +88,6 @@
 </div>
 
 </div>
-<%= link_to '開催日時作成', new_event_dday_path(@event.event_no),class:"btn btn-secondary btn-block" %>
-<%= link_to 'イベント内容変更', edit_event_path(@event),class:"btn btn-secondary btn-block" %> |
+<%= link_to '開催日時作成', new_event_dday_path(@event.id),class:"btn btn-secondary btn-block" %>
+<%= link_to 'イベント内容変更', edit_event_path(@event.id),class:"btn btn-secondary btn-block" %> |
 <%= link_to '一覧へ戻る', events_path,class:"btn btn-secondary btn-block" %>

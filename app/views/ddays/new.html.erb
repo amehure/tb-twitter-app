@@ -1,10 +1,11 @@
 <h1 class="display">開催日時作成</h1>
 
-<%= render 'form', dday: dday, url: new_dday_path (@dday.id)  %>
+<%= render 'form', dday: @dday  %>
+
 <%
 =begin%>
- <%= render 'form', model: [@event, @event.ddays.new] %> 
+ <%= render 'form', dday: @dday, url: new_event_dday_path(@event.id)  %> 
 <%
 =end%>
 
-<%= link_to 'Back', event_path(id: @event_id) %>
+<%= link_to 'Back', event_path(id: @event.id) %>

@@ -33,7 +33,7 @@ class EventsController < ApplicationController
   # GET /events/1/edit
   def edit
     @event = Event.find_by(params[:event_id])
-    @dday = Dday.find(params[:id])
+    # @dday = Dday.find(params[:id])
   end
 
   # POST /events
@@ -87,6 +87,6 @@ class EventsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def event_params
-      params.require(:event).permit(:title, :contents, :days_held, :organizar, :deadline, :multipl_entries)
+      params.require(:event).permit(:event_name, :contents, :days_held, :organizar, :deadline, :multiple_entries, :event_no)
     end
 end
