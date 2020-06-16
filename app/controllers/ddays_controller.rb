@@ -1,5 +1,6 @@
 class DdaysController < ApplicationController
-  before_action :set_dday, only: [:show, :edit, :update, :destroy]
+  before_action :set_dday, only: [:show, :destroy]
+  before_action :set_dday_to_edit, only: [:edit]
   # before_action :permitted_params
 
   # GET /ddays
@@ -33,6 +34,8 @@ class DdaysController < ApplicationController
     @params_id = params[:format]
     @event_id = params[:id]
     @event = Event.find(params[:id])
+    @event_sub_no = Dday.order(event_sub_no: :desc).first.event_sub_no
+    @users = User.where(event_sub_no: params[:format])
   end
 
   # POST /ddays
@@ -62,7 +65,7 @@ class DdaysController < ApplicationController
     # @event_no = params[:event_id]
     # @event_id = Event.where(event_no: @event_no ).first.id
     respond_to do |format|
-      if @dday.update(dday_params)
+      if Dday.update(dday_params)
         format.html { redirect_to event_path(id: @event_id), notice: 'Dday was successfully updated.' }
         format.json { render :show, status: :ok, location: @dday }
       else
@@ -91,6 +94,9 @@ class DdaysController < ApplicationController
       @dday = Dday.find(params[:id])
     end
 
+    def set_dday_to_edit
+      @dday = Dday.find(params[:format])
+    end
     # Only allow a list of trusted parameters through.
     def dday_params
       params.require(:dday).permit(:event_no, :event_sub_no, :event_date, :decision, :max_num, :zoom_id, :zoom_url, :zoom_pass, :event_id)

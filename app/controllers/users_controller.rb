@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  # before_action :set_user, only: [:show, :edit, :update]
 
   # GET /users
   # GET /users.json
@@ -14,16 +15,19 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    p "newコントローラー"
+    p "UserNewコントローラー"
     @user = User.new
     @dday = Dday.find(params[:dday_id])
     @event_id = @dday.event_id
     @event = Event.find(@event_id)
     @id = @event.id
-    p @event
-    first_serial_no = User.order(serial_no: :desc).first
+    @array_size = @dday.max_num
+    max_num = Dday.pluck(:max_num).max
+    array_range = (1..max_num)
+    array_serial_no = User.order(:serial_no).pluck(:serial_no)
+    first_serial_no = array_range.map { |n| array_serial_no.include?(n) ? n : nil }.index(nil)
     if first_serial_no.present?
-      @serial_no = first_serial_no.serial_no + 1
+      @serial_no = first_serial_no + 1
     else
       @serial_no = 1
     end
@@ -73,9 +77,12 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    @params_id = params[:format]
+    event_sub_no = User.find(params[:id]).event_sub_no
+    @event_id = Dday.find_by(event_sub_no: event_sub_no).event_id
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to event_path(@event_id), notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -88,7 +95,7 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.fetch(:user, {})
+      # params.fetch(:user, {})
       params.require(:user).permit(:event_no, :event_sub_no, :serial_no, :twitter_screenname, :dday_id)
     end
 end
