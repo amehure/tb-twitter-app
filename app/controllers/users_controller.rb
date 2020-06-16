@@ -14,7 +14,13 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
+    p "newコントローラー"
     @user = User.new
+    @dday = Dday.find(params[:dday_id])
+    @event_id = @dday.event_id
+    @event = Event.find(@event_id)
+    @id = @event.id
+    p @event
   end
 
   # GET /users/1/edit
@@ -25,10 +31,13 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-
+    @dday = Dday.find(params[:dday_id])
+    @event_id = @dday.event_id
+    @event = Event.find(@event_id)
+    @id = @event.id
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html { redirect_to  event_path(@id), notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -40,9 +49,13 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+    @dday = Dday.find(params[:dday_id])
+    @event_id = @dday.event_id
+    @event = Event.find(@event_id)
+    @id = @event.id
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to  event_path(@id), notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -70,5 +83,6 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       params.fetch(:user, {})
+      params.require(:user).permit(:event_no, :event_sub_no, :serial_no, :twitter_screenname, :dday_id)
     end
 end

@@ -1,5 +1,5 @@
 module DdaysHelper
-    def choose_new_or_edit
+    def dday_choose_new_or_edit
         p "アクション"
         p action_name
         if action_name == 'new' || action_name == 'create'

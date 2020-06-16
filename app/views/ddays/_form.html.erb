@@ -5,7 +5,7 @@
 
 <%
 =end%>
-  <%= form_with(model: dday, url: choose_new_or_edit, local: true) do |form| %>  
+  <%= form_with(model: dday, url: dday_choose_new_or_edit, local: true) do |form| %>  
     <% if dday.errors.any? %>
       <div id="error_explanation">
         <h2><%= pluralize(dday.errors.count, "error") %> prohibited this dday from being saved:</h2>
@@ -26,7 +26,7 @@
         </tr>
         <tr class="field form-group">
           <th class=""><%= form.label :event_sub_no %></th>
-          <td><%= form.text_field :event_sub_no,class:"form-control" %></td>
+          <td><%= form.number_field :event_sub_no, value: @event_sub_no, class:"form-control" %></td>
         </tr>
 
         <tr class="field form-group">

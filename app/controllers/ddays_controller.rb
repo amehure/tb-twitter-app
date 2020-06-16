@@ -15,9 +15,17 @@ class DdaysController < ApplicationController
 
   # GET /ddays/new
   def new
+    p "DdayNewコントローラー"
     @dday = Dday.new
     @event_id = params[:event_id]
     @event = Event.find(params[:event_id])
+    first_event_sub_no = Dday.order(event_sub_no: :desc).first
+    p first_event_sub_no
+    if first_event_sub_no.present?
+      @event_sub_no = first_event_sub_no.event_sub_no + 1
+    else
+      @event_sub_no = 1
+    end
   end
 
   # GET /ddays/1/edit
