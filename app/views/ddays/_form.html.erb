@@ -64,8 +64,7 @@
     <%= form.submit class:"btn btn-secondary btn-block" %>
   </div>
 <% end %>
-<% users = @users.try(:twitter_screenname) || [] %>
-<% users.each do |user|  %>
+<% @users.each do |user|  %>
   <%= user.twitter_screenname %>
   <%= link_to '削除', user_path(user), method: :delete, class:"btn btn-secondary btn-sm text-nowrap", data: { confirm: '予定を削除されます。よろしいですか？' } %>
 <% end %>
