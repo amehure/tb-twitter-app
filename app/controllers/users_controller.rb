@@ -21,6 +21,12 @@ class UsersController < ApplicationController
     @event = Event.find(@event_id)
     @id = @event.id
     p @event
+    first_serial_no = User.order(serial_no: :desc).first
+    if first_serial_no.present?
+      @serial_no = first_serial_no.serial_no + 1
+    else
+      @serial_no = 1
+    end
   end
 
   # GET /users/1/edit
