@@ -20,12 +20,15 @@ class UsersController < ApplicationController
     @dday = Dday.find(params[:dday_id])
     @event_id = @dday.event_id
     @event = Event.find(@event_id)
-    @id = @event.id
-    @array_size = @dday.max_num
-    max_num = Dday.pluck(:max_num).max
+    # @id = @event.id
+    # @array_size = @dday.max_num
+    max_num = @dday.max_num
     array_range = (1..max_num)
-    array_serial_no = User.order(:serial_no).pluck(:serial_no)
+    p array_range
+    array_serial_no = User.where(event_sub_no: @dday.event_sub_no).order(:serial_no).pluck(:serial_no)
+    p array_serial_no
     first_serial_no = array_range.map { |n| array_serial_no.include?(n) ? n : nil }.index(nil)
+    p first_serial_no
     if first_serial_no.present?
       @serial_no = first_serial_no + 1
     else

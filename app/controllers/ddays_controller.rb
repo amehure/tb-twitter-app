@@ -20,9 +20,14 @@ class DdaysController < ApplicationController
     @dday = Dday.new
     @event_id = params[:event_id]
     @event = Event.find(params[:event_id])
-    first_event_sub_no = Dday.order(event_sub_no: :desc).first
+    array_range = (1..@event.days_held)
+    p array_range
+    array_event_sub_no = Dday.order(:event_sub_no).pluck(:event_sub_no)
+    p array_event_sub_no
+    first_event_sub_no = array_range.map { |n| array_event_sub_no.include?(n) ? n : nil }.index(nil)
+    # first_event_sub_no = Dday.order(event_sub_no: :desc).first
     if first_event_sub_no.present?
-      @event_sub_no = first_event_sub_no.event_sub_no + 1
+      @event_sub_no = first_event_sub_no + 1
     else
       @event_sub_no = 1
     end

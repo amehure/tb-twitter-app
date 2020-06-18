@@ -75,7 +75,7 @@
           <% group.each do |num| %>
           <td id="<%= dday.event_id %>_<%= dday.event_sub_no %>_entry_<%= num %>" class="text-nowrap ">
             <% if num.present? %>
-              <%= User.find_by(serial_no: num).try(:twitter_screenname) || "空" %>
+              <%= User.where(event_sub_no: dday.event_sub_no).find_by(serial_no: num).try(:twitter_screenname) || "空" %>
             <% end %>
           </td>
           <% end %>
