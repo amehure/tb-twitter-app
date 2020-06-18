@@ -86,11 +86,12 @@ class DdaysController < ApplicationController
   # DELETE /ddays/1
   # DELETE /ddays/1.json
   def destroy 
-    @params_id = params[:format]
-    @event_id = params[:id]
+    params_id = params[:format]
+    dday = Dday.find(params[:id])
+    event_id = Event.find(dday.event_id).id
     @dday.destroy
     respond_to do |format|
-      format.html { redirect_to event_path(@event_id), notice: 'Dday was successfully destroyed.' }
+      format.html { redirect_to event_path(event_id), notice: 'Dday was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

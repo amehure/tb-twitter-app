@@ -38,10 +38,12 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @dday = Dday.find(params[:id])
+    user_id = params[:id]
+    user = User.find(user_id)
+    @dday = Dday.find(user.dday.id)
     event_id = @dday.event_id
     @event = Event.find(event_id)
-    @serial_no = User.find(params[:format]).serial_no
+    @serial_no = User.find(user_id).serial_no
   end
 
   # POST /users
@@ -66,13 +68,18 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    @dday = Dday.find(params[:id])
-    @event_id = @dday.event_id
-    @event = Event.find(@event_id)
-    @id = @event.id
+    # @dday = Dday.find(params[:id])
+    # @event_id = @dday.event_id
+    # @event = Event.find(@event_id)
+    # @id = @event.id
+    user_id = params[:id]
+    user = User.find(user_id)
+    dday_id = user.dday_id
+    dday = Dday.find(dday_id)
+    event_id = dday.event_id
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to  event_path(@id), notice: 'User was successfully updated.' }
+        format.html { redirect_to  event_path(event_id), notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -84,12 +91,16 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    @params_id = params[:format]
-    event_sub_no = User.find(params[:id]).event_sub_no
-    @event_id = Dday.find_by(event_sub_no: event_sub_no).event_id
+    user_id = params[:id]
+    user = User.find(user_id)
+    dday_id = user.dday_id
+    dday = Dday.find(dday_id)
+    event_id = dday.event_id
+    # event_sub_no = User.find(params[:id]).event_sub_no
+    # event_id = Event.find(dday.event_id).id
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to event_path(@event_id), notice: 'User was successfully destroyed.' }
+      format.html { redirect_to event_path(event_id), notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
