@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     max_num = @dday.max_num
     array_range = (1..max_num)
     p array_range
-    array_serial_no = User.where(event_sub_no: @dday.event_sub_no).order(:serial_no).pluck(:serial_no)
+    array_serial_no = User.where(event_no: @dday.event_no).where(event_sub_no: @dday.event_sub_no).order(:serial_no).pluck(:serial_no)
     p array_serial_no
     first_serial_no = array_range.map { |n| array_serial_no.include?(n) ? n : nil }.index(nil)
     p first_serial_no

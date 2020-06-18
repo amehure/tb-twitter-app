@@ -31,15 +31,25 @@ RSpec.describe User, type: :model do
       @user.valid?
       expect(@user.errors[:twitter_screenname]).to include("can't be blank")
     end
-    it "重複serial_no,event_sub_noを持つ場合、無効になるか" do
-      @created_user = create(:user, serial_no: 1, event_sub_no: 1 )
-      @user = build(:user, serial_no: 1, event_sub_no: 1 )
+    it "重複serial_no,event_sub_no,event_noを持つ場合、無効になるか" do
+      @created_user = create(:user, serial_no: 1, event_sub_no: 1, event_no: 1 )
+      @user = build(:user, serial_no: 1, event_sub_no: 1, event_no: 1 )
       @user.valid?
       expect(@user.errors[:serial_no]).to include("has already been taken")
     end
     it "重複event_sub_noを持つ場合でも、有効になるか" do
       @created_user = create(:user, event_sub_no: 1 )
       @user = build(:user, event_sub_no: 1 )
+      expect(@user).to be_valid
+    end
+    it "重複event_noを持つ場合でも、有効になるか" do
+      @created_user = create(:user, event_no: 1 )
+      @user = build(:user, event_no: 1 )
+      expect(@user).to be_valid
+    end
+    it "重複event_no、event_sub_noを持つ場合でも、有効になるか" do
+      @created_user = create(:user, event_no: 1, event_sub_no: 1 )
+      @user = build(:user, event_no: 1, event_sub_no: 1 )
       expect(@user).to be_valid
     end
   end

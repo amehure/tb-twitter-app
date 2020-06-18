@@ -35,11 +35,15 @@ class DdaysController < ApplicationController
 
   # GET /ddays/1/edit
   def edit
+    # DdayのID
     @params_id = params[:format]
+    # EventのID
     @event_id = params[:id]
     @event = Event.find(params[:id])
-    @event_sub_no = Dday.order(event_sub_no: :desc).first.event_sub_no
-    @users = User.where(event_sub_no: params[:format])
+    dday = Dday.find(@params_id)
+    event_no = dday.event_no
+    @event_sub_no = dday.event_sub_no
+    @users = User.where(event_no: event_no).where(event_sub_no: @event_sub_no)
   end
 
   # POST /ddays
