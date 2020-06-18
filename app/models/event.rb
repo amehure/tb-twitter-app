@@ -6,6 +6,6 @@ class Event < ApplicationRecord
         validates :event_name
         validates :organizar
         validates :deadline
-        validates :multiple_entries
+        # validates :multiple_entries
     end
 end

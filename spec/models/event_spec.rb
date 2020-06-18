@@ -26,11 +26,12 @@ RSpec.describe Event, type: :model do
     event.valid?
     expect(event.errors[:deadline]).to include("can't be blank")
   end
-  it "multiple_entriesがない場合、無効になるか" do
-    event = build(:event, multiple_entries: nil)
-    event.valid?
-    expect(event.errors[:multiple_entries]).to include("can't be blank")
-  end
+  # checkboxが作動しないため、multiple_entriesのバリデーションを外した
+  # it "multiple_entriesがない場合、無効になるか" do
+  #   event = build(:event, multiple_entries: nil)
+  #   event.valid?
+  #   expect(event.errors[:multiple_entries]).to include("can't be blank")
+  # end
   it "重複event_noを持つ場合、無効になるか" do
     event1 = create(:event, event_no: "IV000001")
     event2 = build(:event, event_no: "IV000001")

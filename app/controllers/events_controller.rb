@@ -27,7 +27,7 @@ class EventsController < ApplicationController
 
   # GET /events/new
   def new
-    @event = Event.new
+    @event = Event.new(multiple_entries: false)
   end
 
   # GET /events/1/edit

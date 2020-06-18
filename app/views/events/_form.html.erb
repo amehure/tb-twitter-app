@@ -44,7 +44,9 @@
 
         <tr class="field form-group">
           <th class=""><%= form.label :multiple_entries %></th>
-          <td><%= form.check_box :multiple_entries,class:"form-control" %></td>
+          <td>
+            <%= form.check_box :multiple_entries, { class:"form-control"}, 1, 0 %>
+          </td>
         </tr>
       </tbody>
     </table>
