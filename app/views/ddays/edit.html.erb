@@ -1,10 +1,23 @@
-<h1>Editing Dday</h1>
+<div class="container">
+    <h1>開催日時変更</h1>
 
-<%= render 'form', dday: @dday %>
-<%
-=begin%>
- <%= render 'form', dday: @dday, url: edit_dday_path(@dday.id)  %> 
-<%
-=end%>
-
-<%= link_to 'Back', event_path(id: @event_id) %>
+    <%= render 'form', dday: @dday %>
+    <div class="table-responsive border">
+        <table class="table">
+            <thead>
+                <tr>参加者管理</tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <% @users.each do |user|  %>
+                    <th><%= user.serial_no %></th>
+                    <td><%= user.twitter_screenname %></td>
+                    <td><%= link_to '削除', user_path(user), method: :delete, class:"btn btn-secondary btn-sm text-nowrap", data: { confirm: '予定を削除されます。よろしいですか？' } %></td>
+                    <td><%= link_to '変更', edit_user_path(user.event_sub_no,user.serial_no),action: :get, class:"btn btn-secondary btn-sm text-nowrap" %></td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+        <%= link_to '戻る', event_path(id: @event_id),class:"btn btn-secondary btn-block" %>
+    </div>
+</div>

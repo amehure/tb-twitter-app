@@ -1,4 +1,3 @@
-<div class="container">
   <%= form_with(model: dday, url: dday_choose_new_or_edit, local: true) do |form| %>  
     <% if dday.errors.any? %>
       <div id="error_explanation">
@@ -64,9 +63,3 @@
     <%= form.submit class:"btn btn-secondary btn-block" %>
   </div>
 <% end %>
-<% @users.each do |user|  %>
-  <%= user.twitter_screenname %>
-  <%= link_to '削除', user_path(user), method: :delete, class:"btn btn-secondary btn-sm text-nowrap", data: { confirm: '予定を削除されます。よろしいですか？' } %>
-<% end %>
-</div>
-

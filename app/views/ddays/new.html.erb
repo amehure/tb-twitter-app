@@ -1,5 +1,7 @@
-<h1 class="display">開催日時作成</h1>
+<div class="container">
+    <h1 class="display">開催日時作成</h1>
 
-<%= render 'form', dday: @dday  %>
+    <%= render 'form', dday: @dday  %>
 
-<%= link_to 'Back', event_path(id: @event.id) %>
+    <%= link_to '戻る', event_path(id: @event.id) %>
+</div>

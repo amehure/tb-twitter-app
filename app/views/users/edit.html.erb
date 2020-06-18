@@ -1,6 +1,6 @@
-<h1>Editing User</h1>
+<h1>参加者変更</h1>
 
 <%= render 'form', user: @user %>
 
 <%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>
+<%= link_to '戻る', event_path(id: @event.id) %>

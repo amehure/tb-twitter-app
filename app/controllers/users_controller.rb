@@ -35,6 +35,10 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    @dday = Dday.find(params[:id])
+    event_id = @dday.event_id
+    @event = Event.find(event_id)
+    @serial_no = User.find(params[:format]).serial_no
   end
 
   # POST /users
@@ -59,7 +63,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    @dday = Dday.find(params[:dday_id])
+    @dday = Dday.find(params[:id])
     @event_id = @dday.event_id
     @event = Event.find(@event_id)
     @id = @event.id
