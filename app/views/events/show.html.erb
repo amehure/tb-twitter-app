@@ -43,55 +43,56 @@
       </tbody>
     </table>
   </div>
-<div class="table-responsive">
-  <table class="table border">
-    <thead>
-      <tr class="">
-        <th class="text-nowrap "><strong>開催決定区分</strong></th>
-        <th class="text-nowrap "><strong>ZoomID/url</strong></th>
-        <th class="text-nowrap "><strong>開催日時</strong></th>
-        <th class="text-nowrap "><strong>内容</strong></th>
-        <% @col_range.in_groups_of(@max_col) do |group|%>
-          <% group.each do |n| %>
-            <th class="text-nowrap "><strong><%= n %></strong></th>
-          <% end %>
-        <% end %>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @dday.each do |dday| %>
-      <tr class="">
-        <td class="text-nowrap ">
-          <div class="form-check"><input type="checkbox" class="form-check-input" value=""><label for="" class="form-check-label">決定</label></div>
-          <div class="form-check"><input type="checkbox" class="form-check-input" value=""><label for="" class="form-check-label">キャンセル</label></div>
-          <div class="form-check"><input type="checkbox" class="form-check-input" value=""><label for="" class="form-check-label">延期</label></div>
-          <button class="btn btn-sm btn-secondary">DM送信</button>
-        </td>
-        <td class="text-nowrap "><%= dday.try(:zoom_url) %>/<br><%= dday.try(:zoom_id) %></td>
-        <td class="text-nowrap "><%= dday.try(:event_date).strftime("%Y年 %m月 %d日")+" ("+week(dday.try(:event_date))+")" %></td>
-        <td class="text-nowrap "><%= dday.try(:decision) %></td>
-        <% [*(1..dday.max_num )].in_groups_of(@max_col) do |group|%>
-          <% group.each do |num| %>
-          <td id="<%= dday.event_id %>_<%= dday.event_sub_no %>_entry_<%= num %>" class="text-nowrap ">
-            <% if num.present? %>
-              <%= User.where(event_no: dday.event_no).where(event_sub_no: dday.event_sub_no).find_by(serial_no: num).try(:twitter_screenname) || "空" %>
+  <div class="table-responsive">
+    <table class="table border">
+      <thead>
+        <tr class="">
+          <th class="text-nowrap "><strong>開催決定区分</strong></th>
+          <th class="text-nowrap "><strong>ZoomID/url</strong></th>
+          <th class="text-nowrap "><strong>開催日時</strong></th>
+          <th class="text-nowrap "><strong>内容</strong></th>
+          <% @col_range.in_groups_of(@max_col) do |group|%>
+            <% group.each do |n| %>
+              <th class="text-nowrap "><strong><%= n %></strong></th>
             <% end %>
-          </td>
           <% end %>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @dday.each do |dday| %>
+        <tr class="">
+          <td class="text-nowrap ">
+            <div class="form-check"><input type="checkbox" class="form-check-input" value=""><label for="" class="form-check-label">決定</label></div>
+            <div class="form-check"><input type="checkbox" class="form-check-input" value=""><label for="" class="form-check-label">キャンセル</label></div>
+            <div class="form-check"><input type="checkbox" class="form-check-input" value=""><label for="" class="form-check-label">延期</label></div>
+            <button class="btn btn-sm btn-secondary">DM送信</button>
+          </td>
+          <td class="text-nowrap "><%= dday.try(:zoom_url) %>/<br><%= dday.try(:zoom_id) %></td>
+          <td class="text-nowrap "><%= dday.try(:event_date).strftime("%Y年 %m月 %d日")+" ("+week(dday.try(:event_date))+")" %></td>
+          <td class="text-nowrap "><%= dday.try(:decision) %></td>
+          <% [*(1..dday.max_num )].in_groups_of(@max_col) do |group|%>
+            <% group.each do |num| %>
+            <td id="<%= dday.event_id %>_<%= dday.event_sub_no %>_entry_<%= num %>" class="text-nowrap ">
+              <% if num.present? %>
+                <%= User.where(event_no: dday.event_no).where(event_sub_no: dday.event_sub_no).find_by(serial_no: num).try(:twitter_screenname) || "空" %>
+              <% end %>
+            </td>
+            <% end %>
+          <% end %>
+
+          <td>
+            <%= link_to '編集', edit_dday_path(@event.id,dday.id),class:"btn btn-secondary btn-sm text-nowrap" %>
+            <%= link_to '削除', dday_path(dday.id), method: :delete, class:"btn btn-secondary btn-sm text-nowrap", data: { confirm: '予定を削除されます。よろしいですか？' } %>
+            <%= link_to '参加', new_dday_user_path(dday.id),class:"btn btn-secondary btn-sm text-nowrap" %>
+          </td>
+        </tr>
         <% end %>
-        
-        <td>
-          <%= link_to '編集', edit_dday_path(@event.id,dday.id),class:"btn btn-secondary btn-sm text-nowrap" %>
-          <%= link_to '削除', dday_path(dday.id), method: :delete, class:"btn btn-secondary btn-sm text-nowrap", data: { confirm: '予定を削除されます。よろしいですか？' } %>
-          <%= link_to '参加', new_dday_user_path(dday.id),class:"btn btn-secondary btn-sm text-nowrap" %>
-        </td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
-<%= link_to '開催日時作成', new_event_dday_path(@event.id),class:"btn btn-secondary btn-block" %>
-<%= link_to 'イベント内容変更', edit_event_path(@event.id),class:"btn btn-secondary btn-block" %> 
-<%= link_to '一覧へ戻る', events_path,class:"btn btn-secondary btn-block" %>
+      </tbody>
+    </table>
+  </div>
+  <%= link_to '開催日時作成', new_event_dday_path(@event.id),class:"btn btn-secondary btn-block" %>
+  <%= link_to 'イベント内容変更', edit_event_path(@event.id),class:"btn btn-secondary btn-block" %> 
+  <%= link_to '一覧へ戻る', events_path,class:"btn btn-secondary btn-block" %>
 </div>
 
