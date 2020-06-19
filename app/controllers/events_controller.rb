@@ -32,7 +32,7 @@ class EventsController < ApplicationController
 
   # GET /events/1/edit
   def edit
-    @event = Event.find_by(params[:event_id])
+    @event = Event.find(params[:id])
     # @dday = Dday.find(params[:id])
   end
 
