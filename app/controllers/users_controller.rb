@@ -59,6 +59,9 @@ class UsersController < ApplicationController
         format.html { redirect_to  event_path(@id), notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
+        @user = User.new(user_params)
+        @serial_no = @user.serial_no
+        p @serial_no
         format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
