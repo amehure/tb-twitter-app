@@ -31,17 +31,16 @@
             <td><span class="m-5 text-nowrap"><%= event.multiple_entries %></span></th>
             <td><span class="m-5 text-nowrap"><%= event.try(:created_at).strftime("%Y年 %m月 %d日")+" ("+week(event.try(:created_at))+")" %></span></th>
             <td><span class="m-5 text-nowrap"><%= event.try(:updated_at).strftime("%Y年 %m月 %d日")+" ("+week(event.try(:updated_at))+")" %></span></th>
-            <td><%= link_to 'Show', event, class:"btn btn-secondary btn-sm text-nowrap" %></td>
-            <td><%= link_to 'Edit', edit_event_path(event), class:"btn btn-secondary btn-sm text-nowrap" %></td>
-            <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: '予定を削除されます。よろしいですか？' }, class:"btn btn-secondary btn-sm text-nowrap" %></td>
+            <td><%= link_to '詳細', event, class:"btn btn-secondary btn-sm text-nowrap" %></td>
+            <td><%= link_to '編集', edit_event_path(event), class:"btn btn-secondary btn-sm text-nowrap" %></td>
+            <td><%= link_to '削除', event, method: :delete, data: { confirm: '予定を削除されます。よろしいですか？' }, class:"btn btn-secondary btn-sm text-nowrap" %></td>
           </tr>
         <% end %>
         </tbody>
       </table>
     </div>
 
-
   <br>
 
-  <%= link_to 'New Event', new_event_path, class:"btn btn-secondary btn-block" %>
+  <%= link_to '新規イベント作成', new_event_path, class:"btn btn-secondary btn-block" %>
 </div>

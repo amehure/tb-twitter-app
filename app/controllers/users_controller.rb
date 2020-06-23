@@ -70,10 +70,6 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    # @dday = Dday.find(params[:id])
-    # @event_id = @dday.event_id
-    # @event = Event.find(@event_id)
-    # @id = @event.id
     user_id = params[:id]
     user = User.find(user_id)
     dday_id = user.dday_id
@@ -87,9 +83,6 @@ class UsersController < ApplicationController
         user = User.new(user_params)
         @dday = Dday.find(user.dday_id)
         @event = Event.find(@dday.event_id)
-        p user
-        p @dday
-        p @event
         format.html { render :edit }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end

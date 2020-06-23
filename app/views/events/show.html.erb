@@ -73,7 +73,7 @@
           <td class="text-nowrap "><%= dday.try(:decision) %></td>
           <% [*(1..dday.max_num )].in_groups_of(@max_col) do |group|%>
             <% group.each do |num| %>
-            <td id="<%= dday.event_id %>_<%= dday.event_sub_no %>_entry_<%= num %>" class="text-nowrap ">
+            <td class="text-nowrap ">
               <% if num.present? %>
                 <%= User.where(event_no: dday.event_no).where(event_sub_no: dday.event_sub_no).find_by(serial_no: num).try(:twitter_screenname) || "空" %>
               <% end %>
@@ -82,11 +82,6 @@
           <% end %>
 
           <td>
-            <%
-=begin%>
- <%= link_to '編集', edit_dday_path(@event.id,dday.id),class:"btn btn-secondary btn-sm text-nowrap" %> 
-<%
-=end%>
             <%= link_to '編集', edit_dday_path(dday.id),class:"btn btn-secondary btn-sm text-nowrap" %>
             <%= link_to '削除', dday_path(dday.id), method: :delete, class:"btn btn-secondary btn-sm text-nowrap", data: { confirm: '予定を削除されます。よろしいですか？' } %>
             <%= link_to '参加', new_dday_user_path(dday.id),class:"btn btn-secondary btn-sm text-nowrap" %>

@@ -1,6 +1,5 @@
 <h1>参加者変更</h1>
 
 <%= render 'form', user: @user %>
-
-<%= link_to 'Show', @user %> |
-<%= link_to '戻る', event_path(id: @event.id) %>
+<br>
+<%= link_to '戻る', event_path(id: @event.id),class:"btn btn-secondary btn-block" %>
