@@ -24,6 +24,9 @@ FactoryBot.define do
         sequence(:zoom_id) { |n| "TEST_ZOOM_ID#{n}"}
         sequence(:zoom_pass) { |n| "TEST_ZOOM_PASS#{n}"}
     
+        trait :with_event do
+            event
+        end
         after(:create) do |dday|
             create(:user, dday: dday)
         end
