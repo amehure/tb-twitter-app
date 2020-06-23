@@ -25,5 +25,7 @@ module TbTwitterApp
             controller_specs: false, 
             routing_specs: false
     end
+    # logger用設定
+    config.logger = Logger.new(STDOUT)
   end
 end

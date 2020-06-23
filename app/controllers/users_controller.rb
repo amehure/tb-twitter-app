@@ -84,6 +84,12 @@ class UsersController < ApplicationController
         format.html { redirect_to  event_path(event_id), notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
+        user = User.new(user_params)
+        @dday = Dday.find(user.dday_id)
+        @event = Event.find(@dday.event_id)
+        p user
+        p @dday
+        p @event
         format.html { render :edit }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
@@ -116,6 +122,6 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       # params.fetch(:user, {})
-      params.require(:user).permit(:event_no, :event_sub_no, :serial_no, :twitter_screenname, :dday_id)
+      params.require(:user).permit(:id, :event_no, :event_sub_no, :serial_no, :twitter_screenname, :dday_id)
     end
 end

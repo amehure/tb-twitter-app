@@ -1,6 +1,6 @@
 class DdaysController < ApplicationController
-  before_action :set_dday, only: [:show, :destroy]
-  before_action :set_dday_to_edit, only: [:edit]
+  before_action :set_dday, only: [:show, :destroy, :edit]
+  # before_action :set_dday_to_edit, only: [:edit]
   # before_action :permitted_params
 
   # GET /ddays
@@ -16,34 +16,52 @@ class DdaysController < ApplicationController
 
   # GET /ddays/new
   def new
-    p "DdayNewコントローラー"
+    # p "DdayNewコントローラー"
     @dday = Dday.new
     @event_id = params[:event_id]
-    @event = Event.find(params[:event_id])
-    array_range = (1..@event.days_held)
-    p array_range
-    array_event_sub_no = Dday.order(:event_sub_no).pluck(:event_sub_no)
-    p array_event_sub_no
-    first_event_sub_no = array_range.map { |n| array_event_sub_no.include?(n) ? n : nil }.index(nil)
-    # first_event_sub_no = Dday.order(event_sub_no: :desc).first
-    if first_event_sub_no.present?
+    @event = Event.find(params[:event_id]) 
+    @event_no = params[:event_no] || @event.event_no
+    # @event_no = params[:event_no]
+    if @event.days_held.present?
+      array_range = (1..@event.days_held)
+      array_event_sub_no = Dday.order(:event_sub_no).pluck(:event_sub_no)
+      first_event_sub_no = array_range.map { |n| array_event_sub_no.include?(n) ? n : nil }.index(nil)
       @event_sub_no = first_event_sub_no + 1
     else
       @event_sub_no = 1
     end
+    # array_range = (1..@event.days_held)
+    # p array_range
+    # array_event_sub_no = Dday.order(:event_sub_no).pluck(:event_sub_no)
+    # p array_event_sub_no
+    # first_event_sub_no = array_range.map { |n| array_event_sub_no.include?(n) ? n : nil }.index(nil)
+    # first_event_sub_no = Dday.order(event_sub_no: :desc).first
+    # p first_event_sub_no
+    # if first_event_sub_no.present?
+    #   @event_sub_no = first_event_sub_no + 1
+    # else
+    #   @event_sub_no = 1
+    # end
   end
 
   # GET /ddays/1/edit
   def edit
+    # event_id&dday_id付きリクエストの場合
     # DdayのID
-    @params_id = params[:format]
-    # EventのID
-    @event_id = params[:id]
-    @event = Event.find(params[:id])
-    dday = Dday.find(@params_id)
-    event_no = dday.event_no
-    @event_sub_no = dday.event_sub_no
-    @users = User.where(event_no: event_no).where(event_sub_no: @event_sub_no)
+    # @params_id = params[:format]
+    # @dday = Dday.find(@params_id)
+    # # EventのID
+    # @event_id = params[:id]
+    # @event = Event.find(params[:id])
+    # dday = Dday.find(@params_id)
+    # dday = Dday.find(@params_id)
+    @dday_id = params[:id]
+    @dday = Dday.find(@dday_id)
+    @event_id = @dday.event_id
+    @event = Event.find(@event_id)
+    @event_no = @dday.event_no
+    @event_sub_no = @dday.event_sub_no
+    @users = User.where(event_no: @event_no).where(event_sub_no: @event_sub_no)
   end
 
   # POST /ddays
@@ -57,6 +75,11 @@ class DdaysController < ApplicationController
         format.html { redirect_to event_path(@dday.event_id), notice: 'Dday was successfully created.' }
         format.json { render :show, status: :created, location: @dday }
       else
+        @dday = Dday.new(dday_params)
+        @event = Event.find(params[:event_id])
+        @event_sub_no = @dday.event_sub_no
+        @event_no = @dday.event_no
+        @event_id = @dday.event_id
         format.html { render :new }
         format.json { render json: @dday.errors, status: :unprocessable_entity }
       end
@@ -66,12 +89,11 @@ class DdaysController < ApplicationController
   # PATCH/PUT /ddays/1
   # PATCH/PUT /ddays/1.json
   def update
-    # @dday = Dday.new(dday_params)
-    @params_id = params[:format]
-    @event_id = params[:id]
-    @event = Event.find(params[:id])
-    # @event_no = params[:event_id]
-    # @event_id = Event.where(event_no: @event_no ).first.id
+    dday_id = params[:id]
+    @event_id = Dday.find(dday_id).event_id
+    @even = Event.find(@event_id)
+    # @event_id = params[:id]
+    # @event = Event.find(params[:id])
     respond_to do |format|
       if Dday.update(dday_params)
         format.html { redirect_to event_path(id: @event_id), notice: 'Dday was successfully updated.' }
@@ -99,7 +121,6 @@ class DdaysController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_dday
-      # @dday = Dday.find(params[:format]) || Dday.find(params[:id])
       @dday = Dday.find(params[:id])
     end
 
@@ -108,7 +129,7 @@ class DdaysController < ApplicationController
     end
     # Only allow a list of trusted parameters through.
     def dday_params
-      params.require(:dday).permit(:event_no, :event_sub_no, :event_date, :decision, :max_num, :zoom_id, :zoom_url, :zoom_pass, :event_id)
+      params.require(:dday).permit(:id, :event_no, :event_sub_no, :event_date, :decision, :max_num, :zoom_id, :zoom_url, :zoom_pass, :event_id, :created_at, :updated_at)
     end
     def permitted_params
       params.permit!

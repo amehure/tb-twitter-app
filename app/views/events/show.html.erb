@@ -82,7 +82,12 @@
           <% end %>
 
           <td>
-            <%= link_to '編集', edit_dday_path(@event.id,dday.id),class:"btn btn-secondary btn-sm text-nowrap" %>
+            <%
+=begin%>
+ <%= link_to '編集', edit_dday_path(@event.id,dday.id),class:"btn btn-secondary btn-sm text-nowrap" %> 
+<%
+=end%>
+            <%= link_to '編集', edit_dday_path(dday.id),class:"btn btn-secondary btn-sm text-nowrap" %>
             <%= link_to '削除', dday_path(dday.id), method: :delete, class:"btn btn-secondary btn-sm text-nowrap", data: { confirm: '予定を削除されます。よろしいですか？' } %>
             <%= link_to '参加', new_dday_user_path(dday.id),class:"btn btn-secondary btn-sm text-nowrap" %>
           </td>
