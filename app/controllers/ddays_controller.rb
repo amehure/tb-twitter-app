@@ -22,39 +22,22 @@ class DdaysController < ApplicationController
     @event = Event.find(params[:event_id]) 
     @event_no = params[:event_no] || @event.event_no
     # @event_no = params[:event_no]
-    if @event.days_held.present?
-      array_range = (1..@event.days_held)
-      array_event_sub_no = Dday.order(:event_sub_no).pluck(:event_sub_no)
-      first_event_sub_no = array_range.map { |n| array_event_sub_no.include?(n) ? n : nil }.index(nil)
-      @event_sub_no = first_event_sub_no + 1
+    days_held = @event.days_held
+    if days_held.present?
+      unless days_held == 1
+        array_range = (1..@event.days_held)
+        array_event_sub_no = Dday.order(:event_sub_no).pluck(:event_sub_no)
+        first_event_sub_no = array_range.map { |n| array_event_sub_no.include?(n) ? n : nil }.index(nil)
+        @event_sub_no = first_event_sub_no + 1
+      end
+      @event_sub_no = 1
     else
       @event_sub_no = 1
     end
-    # array_range = (1..@event.days_held)
-    # p array_range
-    # array_event_sub_no = Dday.order(:event_sub_no).pluck(:event_sub_no)
-    # p array_event_sub_no
-    # first_event_sub_no = array_range.map { |n| array_event_sub_no.include?(n) ? n : nil }.index(nil)
-    # first_event_sub_no = Dday.order(event_sub_no: :desc).first
-    # p first_event_sub_no
-    # if first_event_sub_no.present?
-    #   @event_sub_no = first_event_sub_no + 1
-    # else
-    #   @event_sub_no = 1
-    # end
   end
 
   # GET /ddays/1/edit
   def edit
-    # event_id&dday_id付きリクエストの場合
-    # DdayのID
-    # @params_id = params[:format]
-    # @dday = Dday.find(@params_id)
-    # # EventのID
-    # @event_id = params[:id]
-    # @event = Event.find(params[:id])
-    # dday = Dday.find(@params_id)
-    # dday = Dday.find(@params_id)
     @dday_id = params[:id]
     @dday = Dday.find(@dday_id)
     @event_id = @dday.event_id
